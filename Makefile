@@ -1,6 +1,6 @@
 # Helper makefile to demonstrate the use of the rpi-emu docker environment
 # This is mostly useful for development and extension as part of an image builder
-# 
+#
 # For an example using this in a project, see Makefile.example
 
 DATE=2016-05-27
@@ -38,18 +38,31 @@ images/$(IMAGE):
 # Expand the image by a specified size
 # TODO: implement expand script to detect partition sizes
 expand: build bootstrap
-	dd if=/dev/zero bs=1M count=1024 >> images/$(IMAGE)
-	@docker run $(RUN_ARGS) ./expand.sh images/$(IMAGE) 1024
+	dd if=/dev/zero bs=1m count=4096 >> images/$(IMAGE)
+	@docker run $(RUN_ARGS) ./expand.sh images/$(IMAGE) 4096
 
 # Launch the docker image without running any of the utility scripts
 run: build bootstrap
 	@echo "Launching interactive docker session"
-	@docker run $(RUN_ARGS) /bin/bash 
+	@docker run $(RUN_ARGS) /bin/bash
 
 # Launch the docker image into an emulated session
 run-emu: build bootstrap
 	@echo "Launching interactive emulated session"
 	@docker run $(RUN_ARGS) /bin/bash -c './run.sh images/$(IMAGE)'
+
+setup-emu: copy build bootstrap expand
+	@docker run $(RUN_ARGS) /bin/bash -c './run.sh images/$(IMAGE) "/bin/bash /opt/resources/setup.sh"'
+
+	# Copy files from local resources directory into image /usr/resources
+	# Note that the resources directory is mapped to the container as a volume in the RUN_ARGS variable above
+copy: build bootstrap
+	@echo Copying files
+	@docker run $(RUN_ARGS) /bin/bash -c 'mkdir $(MOUNT_DIR) && \
+										./mount.sh images/$(IMAGE) $(MOUNT_DIR) && \
+										cp -Rv /usr/rpi/resources $(MOUNT_DIR)/opt/; \
+										./unmount.sh $(MOUNT_DIR)'
+
 
 test: build bootstrap
 	@echo "Running test command"
