@@ -67,6 +67,7 @@ Commands are installed into the `/usr/rpi` directory of the docker image.
 
 If you have any questions, comments, or suggestions, feel free to open an issue or a pull request.  
 
-## Credits
+
+## Credits
 
  - The shrink script comes from [PiShrink](https://github.com/Drewsif/PiShrink)
