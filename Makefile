@@ -38,8 +38,11 @@ images/$(IMAGE):
 # Expand the image by a specified size
 # TODO: implement expand script to detect partition sizes
 expand: build bootstrap
-	dd if=/dev/zero bs=1m count=4096 >> images/$(IMAGE)
-	@docker run $(RUN_ARGS) ./expand.sh images/$(IMAGE) 4096
+	dd if=/dev/zero bs=1m count=1024 >> images/$(IMAGE)
+	@docker run $(RUN_ARGS) ./expand.sh images/$(IMAGE) 1024
+
+shrink: build bootstrap
+	@docker run $(RUN_ARGS) /bin/bash -c 'pishrink images/$(IMAGE)'
 
 # Launch the docker image without running any of the utility scripts
 run: build bootstrap

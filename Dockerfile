@@ -24,3 +24,4 @@ WORKDIR /usr/rpi
 
 COPY scripts/** /usr/rpi/
 COPY scripts/resources /usr/rpi/resources
+COPY pishrink /usr/sbin/
