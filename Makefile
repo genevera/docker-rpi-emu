@@ -3,13 +3,11 @@
 #
 # For an example using this in a project, see Makefile.example
 
-DATE=2016-05-27
 
-DIST=$(DATE)-raspbian-jessie-lite
-ZIP=$(DIST).zip
-IMAGE=$(DIST).img
+TAR=minibian.zip
+IMAGE=2016-03-12-jessie-minibian.img
 
-DL_PATH=http://vx2-downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-05-31/$(ZIP)
+DL_PATH=https://sourceforge.net/projects/minibian/files/latest/download
 CWD=$(shell pwd)
 
 # Docker arguments
@@ -29,11 +27,8 @@ bootstrap: images/$(IMAGE)
 
 # Fetch the RPI image from the path above
 images/$(IMAGE):
-	@echo "Pulling Raspbian image"
-	@mkdir -p images
-	wget -O images/$(ZIP) -c $(DL_PATH)
-	@unzip -d images/ images/$(ZIP)
-	@touch $@
+	wget -o images/$TAR $IMAGE
+	tar -xf images/$TAR
 
 # Expand the image by a specified size
 # TODO: implement expand script to detect partition sizes

@@ -4,7 +4,7 @@
 # Chains the provided helper scripts to mount the image, bootstrap qemu, run a command
 # and tear down the environment correctly.
 
-if [ "$#" -ne 1 ] && [ "$#" -ne 2 ]; then 
+if [ "$#" -ne 1 ] && [ "$#" -ne 2 ]; then
     echo "Usage: $0 IMAGE MOUNT [COMMAND]"
     echo "IMAGE - raspberry pi .img file"
     echo "[COMMAND] - optional command to execute, defaults to /bin/bash"
@@ -15,7 +15,7 @@ CWD=`pwd`
 MOUNT_DIR=/media/rpi
 
 if [ -z "$2" ]; then
-	COMMAND=bin/bash
+	COMMAND=bin/sh
 else
 	COMMAND=$2
 fi
@@ -37,6 +37,5 @@ chroot $MOUNT_DIR $COMMAND
 # Remove QEMU
 ./qemu-cleanup.sh $MOUNT_DIR
 
-# Exit 
+# Exit
 ./unmount.sh $MOUNT_DIR
-
