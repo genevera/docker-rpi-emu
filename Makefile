@@ -4,7 +4,7 @@
 # For an example using this in a project, see Makefile.example
 
 
-TAR=minibian.zip
+TAR=minibian.tar.gz
 IMAGE=2016-03-12-jessie-minibian.img
 
 DL_PATH=https://sourceforge.net/projects/minibian/files/latest/download
@@ -27,6 +27,7 @@ bootstrap: images/$(IMAGE)
 
 # Fetch the RPI image from the path above
 images/$(IMAGE):
+	mkdir -p images
 	wget -o images/$(TAR) $(DL_PATH)
 	tar -xf images/$(TAR)
 
