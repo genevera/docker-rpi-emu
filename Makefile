@@ -27,7 +27,7 @@ bootstrap: images/$(IMAGE)
 
 # Fetch the RPI image from the path above
 images/$(IMAGE):
-	wget -o images/$(TAR) $(IMAGE)
+	wget -o images/$(TAR) $(DL_PATH)
 	tar -xf images/$(TAR)
 
 # Expand the image by a specified size
