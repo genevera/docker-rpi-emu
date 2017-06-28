@@ -27,8 +27,8 @@ bootstrap: images/$(IMAGE)
 
 # Fetch the RPI image from the path above
 images/$(IMAGE):
-	wget -o images/$TAR $IMAGE
-	tar -xf images/$TAR
+	wget -o images/$(TAR) $(IMAGE)
+	tar -xf images/$(TAR)
 
 # Expand the image by a specified size
 # TODO: implement expand script to detect partition sizes
