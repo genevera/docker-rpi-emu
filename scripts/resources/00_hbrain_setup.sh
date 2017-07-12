@@ -1,11 +1,7 @@
-echo "================ Cleaning ==================="
-apt-get remove wpasupplicant -y
-apt-get install git -y
-
 echo "================ Upgrade env ================"
-
 apt-get update
 apt-get upgrade -y
+apt-get install git -y
 
 echo "================ Installing ROS Indigo ================"
 sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -62,3 +58,9 @@ catkin_init_workspace
 cd $ROS_WS
 cd ~
 echo "======================================================"
+
+HBRAIN_VERSION="0.6.0-beta"
+echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
+echo "export HBRAIN_VERSION=$HBRAIN_VERSION" >> ~/.bashrc
+echo "cat /opt/resources/art.txt" >> ~/.bashrc
+echo "echo hbrain $HBRAIN_VERSION" >>  ~/.bashrc
