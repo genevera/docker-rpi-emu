@@ -3,13 +3,13 @@
 #
 # For an example using this in a project, see Makefile.example
 
-DATE=2016-05-27
+DATE=2017-07-05
 
 DIST=$(DATE)-raspbian-jessie-lite
 ZIP=$(DIST).zip
 IMAGE=$(DIST).img
 
-DL_PATH=http://vx2-downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-05-31/$(ZIP)
+DL_PATH=https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-${DATE}/$(ZIP)
 CWD=$(shell pwd)
 
 # Docker arguments
@@ -52,7 +52,6 @@ images/hbrain_dev_0.img:
 											./mount.sh images/tmp.img $(MOUNT_DIR) && \
 											cp -Rvf /usr/rpi/resources $(MOUNT_DIR)/opt/; \
 											./unmount.sh $(MOUNT_DIR)'
-
 		@docker run $(RUN_ARGS) ./expand.sh images/tmp.img 1024
 		@docker run $(RUN_ARGS) /bin/bash -c './run.sh images/tmp.img "/bin/bash /opt/resources/00_hbrain_setup.sh"'
 		@docker run $(RUN_ARGS) /bin/bash -c 'pishrink images/tmp.img'
