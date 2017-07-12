@@ -47,6 +47,12 @@ shrink: build bootstrap
 images/hbrain_dev_0.img:
 		@cp images/$(IMAGE) images/tmp.img
 		@dd if=/dev/zero bs=1m count=1024 >> images/tmp.img
+		@echo Copying files
+		@docker run $(RUN_ARGS) /bin/bash -c 'mkdir $(MOUNT_DIR) && \
+											./mount.sh images/tmp.img $(MOUNT_DIR) && \
+											cp -Rvf /usr/rpi/resources $(MOUNT_DIR)/opt/; \
+											./unmount.sh $(MOUNT_DIR)'
+
 		@docker run $(RUN_ARGS) ./expand.sh images/tmp.img 1024
 		@docker run $(RUN_ARGS) /bin/bash -c './run.sh images/tmp.img "/bin/bash /opt/resources/00_hbrain_setup.sh"'
 		@docker run $(RUN_ARGS) /bin/bash -c 'pishrink images/tmp.img'
@@ -54,7 +60,7 @@ images/hbrain_dev_0.img:
 
 images/hbrain_dev_1.img: images/hbrain_dev_0.img build
 	  @cp images/hbrain_dev_0.img images/tmp.img
-		dd if=/dev/zero bs=1m count=1024 >> images/tmp.img
+		@dd if=/dev/zero bs=1m count=1024 >> images/tmp.img
 		@echo Copying files
 		@docker run $(RUN_ARGS) /bin/bash -c 'mkdir $(MOUNT_DIR) && \
 											./mount.sh images/tmp.img $(MOUNT_DIR) && \
