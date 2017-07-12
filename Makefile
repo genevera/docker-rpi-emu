@@ -46,8 +46,8 @@ shrink: build bootstrap
 
 images/hbrain_dev_0.img:
 		@cp images/$(IMAGE) images/tmp.img
-		dd if=/dev/zero bs=1m count=1024 >> images/$(IMAGE)
-		@docker run $(RUN_ARGS) ./expand.sh images/$(IMAGE) 1024
+		dd if=/dev/zero bs=1m count=2048 >> images/$(IMAGE)
+		@docker run $(RUN_ARGS) ./expand.sh images/$(IMAGE) 2048
 		@echo Copying files
 		@docker run $(RUN_ARGS) /bin/bash -c 'mkdir $(MOUNT_DIR) && \
 											./mount.sh images/tmp.img $(MOUNT_DIR) && \
@@ -59,8 +59,8 @@ images/hbrain_dev_0.img:
 
 images/hbrain_dev_1.img: images/hbrain_dev_0.img build
 	  @cp images/hbrain_dev_0.img images/tmp.img
-		dd if=/dev/zero bs=1m count=2048 >> images/tmp.img
-		@docker run $(RUN_ARGS) ./expand.sh images/tmp.img 2048
+		dd if=/dev/zero bs=1m count=1024 >> images/tmp.img
+		@docker run $(RUN_ARGS) ./expand.sh images/tmp.img 1024
 		@echo Copying files
 		@docker run $(RUN_ARGS) /bin/bash -c 'mkdir $(MOUNT_DIR) && \
 											./mount.sh images/tmp.img $(MOUNT_DIR) && \
