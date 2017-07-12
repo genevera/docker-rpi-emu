@@ -2,3 +2,4 @@ test/
 *.zip
 *.img
 .DS_Store
+images/
