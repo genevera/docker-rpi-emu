@@ -1,10 +1,23 @@
 echo "================ Install ROS Packages from Source ==================="
+source /opt/ros/indigo/setup.bash
+TMP_ROS_WS=/opt/hbrain/ros_ws_tmp
+mkdir -p $TMP_ROS_WS/src
+cd $TMP_ROS_WS/src
+git clone https://github.com/HotBlackRobotics/hbr_ros
+catkin_init_workspace
+cd $TMP_ROS_WS
+catkin_make && catkin_make install -DCMAKE_INSTALL_PREFIX=/opt/ros/indigo
+cd ~
+rm -rf $TMP_ROS_WS
+echo "======================================================"
+
+
+echo "================ Install hbr_app ====================="
 echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ROS_WS=/opt/hbrain/ros_ws
 mkdir -p $ROS_WS/src
 cd $ROS_WS/src
-git clone https://github.com/HotBlackRobotics/hbr_ros
 git clone https://github.com/HotBlackRobotics/hbr_app
 catkin_init_workspace
 
