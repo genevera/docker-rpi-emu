@@ -4,12 +4,13 @@ source ~/.bashrc
 ROS_WS=/opt/hbrain/ros_ws
 mkdir -p $ROS_WS/src
 cd $ROS_WS/src
+git clone https://github.com/HotBlackRobotics/hbr_ros
+git clone https://github.com/HotBlackRobotics/hbr_app
 catkin_init_workspace
 
 cd $ROS_WS
 cd ~
 echo "======================================================"
-
 
 apt-get install hostapd isc-dhcp-server cron -y
 apt-get install python-pip python-virtualenv -y
@@ -35,7 +36,6 @@ update-rc.d cron defaults
 
 echo "[Service]" >> /lib/systemd/system/networking.service.d/network-pre.conf
 echo "TimeoutStartSec=1" >> /lib/systemd/system/networking.service.d/network-pre.conf
-
 
 OROBOT_VERSION="1.0.0-beta"
 echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
