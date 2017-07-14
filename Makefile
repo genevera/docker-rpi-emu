@@ -57,7 +57,7 @@ images/hbrain_dev_0.img:
 		@docker run $(RUN_ARGS) /bin/bash -c 'pishrink images/tmp.img'
 		@mv images/tmp.img images/hbrain_dev_0.img
 
-images/hbrain_dev_1.img: images/hbrain_dev_0.img build
+images/obrain_dev_1.img: images/hbrain_dev_0.img build
 	  @cp images/hbrain_dev_0.img images/tmp.img
 		dd if=/dev/zero bs=1m count=1024 >> images/tmp.img
 		@docker run $(RUN_ARGS) ./expand.sh images/tmp.img 1024
@@ -66,9 +66,9 @@ images/hbrain_dev_1.img: images/hbrain_dev_0.img build
 											./mount.sh images/tmp.img $(MOUNT_DIR) && \
 											cp -Rvf /usr/rpi/resources $(MOUNT_DIR)/opt/; \
 											./unmount.sh $(MOUNT_DIR)'
-		@docker run $(RUN_ARGS) /bin/bash -c './run.sh images/tmp.img "/bin/bash /opt/resources/01_hbrain_setup.sh"'
+		@docker run $(RUN_ARGS) /bin/bash -c './run.sh images/tmp.img "/bin/bash /opt/resources/01_obrain_setup.sh"'
 		@docker run $(RUN_ARGS) /bin/bash -c 'pishrink images/tmp.img'
-		@mv images/tmp.img images/hbrain_dev_1.img
+		@mv images/tmp.img images/obrain_dev_1.img
 
 # Launch the docker image without running any of the utility scripts
 run: build bootstrap
